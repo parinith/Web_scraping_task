@@ -18,8 +18,6 @@ class ExampleScrapy(scrapy.Spider):
             c =0
             for i in url:
                 if response.urljoin(i):
-                    c=c+1
-                    #print(c)
                     u = response.urljoin(i)
                     d = scrapy.Request(u, callback=self.parse_page2)
                     yield d
@@ -38,7 +36,6 @@ class ExampleScrapy(scrapy.Spider):
         return  s
 
     def parse_page2(self, response):
-        #print(response.css(".prodRight h1::text").get())
         name  = response.css(".prodRight h1::text")[0].get()
         price = response.css('.prodRight h4 span::text')[1].get()
         price = int(price.strip())
@@ -51,5 +48,4 @@ class ExampleScrapy(scrapy.Spider):
                 'description' : description,
                 'image_urls' : image_urls
         }
-        print(dic)
         yield dic
